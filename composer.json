@@ -1,0 +1,48 @@
+{
+    "name": "smartframe-technologies/laminas-cdn",
+    "description": "Laminas module that integrates different CDN provider APIs",
+    "license": "Apache-2.0",
+    "keywords": [
+        "laminas",
+        "cdn",
+        "fastly"
+    ],
+    "extra": {
+        "laminas": {
+            "component": "Smartframe\\Cdn",
+            "config-provider": "Smartframe\\Cdn\\ConfigProvider"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Smartframe\\Cdn\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SmartframeTest\\Cdn\\": "test/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Michal Izewski",
+            "email": "michal.izewski@smartframe.io"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "fastly/fastly": "^0.4.1",
+        "fig/http-message-util": "^1.1.5",
+        "laminas/laminas-servicemanager": "^3.10.0",
+        "psr/container": "^1.1.2",
+        "psr/http-message": "^1.0.1",
+        "psr/log": "^1.1.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "roave/security-advisories": "dev-latest"
+    },
+    "config" : {
+        "sort-packages": true
+    }
+}

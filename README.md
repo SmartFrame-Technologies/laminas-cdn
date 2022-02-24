@@ -2,8 +2,7 @@
 
 The `LaminasCdn` provides integration of the CDN APIs.
 
-[![Build Status](https://travis-ci.com/SmartFrame-Technologies/laminas-cdn.svg?branch=master)](https://travis-ci.com/SmartFrame-Technologies/laminas-cdn)
-[![Coverage Status](https://coveralls.io/repos/github/SmartFrame-Technologies/laminas-cdn/badge.svg?branch=master)](https://coveralls.io/github/SmartFrame-Technologies/laminas-cdn?branch=master)
+[![Build Status](https://github.com/smartframe-technologies/laminas-cdn/actions/workflows/continous-integration.yml/badge.svg?branch=git-actions-test)](https://github.com/smartframe-technologies/laminas-cdn/actions/workflows/continous-integration/badge.svg?branch=git-actions-test)
 
 ## Installation
 

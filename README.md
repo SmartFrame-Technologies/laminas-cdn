@@ -2,7 +2,7 @@
 
 The `LaminasCdn` provides integration of the CDN APIs.
 
-[![Build Status](https://github.com/SmartFrame-Technologies/laminas-cdn/actions/workflows/build.yml/badge.svg?branch=git-actions-test)](https://github.com/SmartFrame-Technologies/laminas-cdn/actions/workflows/build.yml/badge.svg?branch=git-actions-test)
+[![Build Status](https://github.com/SmartFrame-Technologies/laminas-cdn/actions/workflows/build.yml/badge.svg?branch=git-actions-tests)](https://github.com/SmartFrame-Technologies/laminas-cdn/actions/workflows/build.yml/badge.svg?branch=git-actions-tests)
 
 ## Installation
 

@@ -2,7 +2,9 @@
 
 The `LaminasCdn` provides integration of the CDN APIs.
 
-[![Build Status](https://github.com/SmartFrame-Technologies/laminas-cdn/actions/workflows/build.yml/badge.svg?branch=git-actions-tests)](https://github.com/SmartFrame-Technologies/laminas-cdn/actions/workflows/build.yml/badge.svg?branch=git-actions-tests)
+[![Build Status](https://github.com/SmartFrame-Technologies/laminas-cdn/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/SmartFrame-Technologies/laminas-cdn/actions/workflows/build.yml/badge.svg?branch=master)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=SmartFrame-Technologies_laminas-cdn&metric=coverage)](https://sonarcloud.io/summary/new_code?id=SmartFrame-Technologies_laminas-cdn)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=SmartFrame-Technologies_laminas-cdn&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=SmartFrame-Technologies_laminas-cdn)
 
 ## Installation
 

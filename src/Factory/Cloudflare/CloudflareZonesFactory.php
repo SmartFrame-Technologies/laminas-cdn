@@ -20,7 +20,7 @@ class CloudflareZonesFactory implements FactoryInterface
     {
         $config = $container->get('config')['cdn']['cloudflare'];
 
-        if (is_null($config['apiToken']) || $config['apiToken'] === ConfigProvider::API_TOKEN_PLACEHOLDER) {
+        if (!isset($config['apiToken']) || $config['apiToken'] === ConfigProvider::API_TOKEN_PLACEHOLDER) {
             throw new CloudflareApiTokenNotDefinedException();
         }
 

@@ -43,6 +43,9 @@ class CloudflarePurge implements PurgeInterface
         return $this->zonesEndpoint->cachePurgeEverything($cacheId);
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function isWildcardUrlSupported(): bool
     {
         return false;

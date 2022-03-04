@@ -24,7 +24,7 @@ class FastlyClientFactory implements FactoryInterface
     {
         $apiToken = $container->get('config')['cdn']['fastly']['apiToken'] ?? null;
 
-        if (is_null($apiToken) || $apiToken === ConfigProvider::FASTLY_API_TOKEN_PLACEHOLDER) {
+        if (is_null($apiToken) || $apiToken === ConfigProvider::API_TOKEN_PLACEHOLDER) {
             throw new FastlyApiTokenNotDefinedException();
         }
 

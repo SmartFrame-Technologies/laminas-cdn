@@ -50,7 +50,7 @@ class FastlyClientFactoryTest extends TestCase
             'config' => [
                 'cdn' => [
                     'fastly' => [
-                        'apiToken' => ConfigProvider::FASTLY_API_TOKEN_PLACEHOLDER
+                        'apiToken' => ConfigProvider::API_TOKEN_PLACEHOLDER
                     ]
                 ]
             ],

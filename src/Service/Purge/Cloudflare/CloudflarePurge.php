@@ -54,7 +54,7 @@ class CloudflarePurge implements PurgeInterface
     /**
      * @codeCoverageIgnore
      */
-    public static function isWildcardUrlSupported(): bool
+    public function isWildcardUrlSupported(): bool
     {
         return false;
     }
@@ -62,7 +62,7 @@ class CloudflarePurge implements PurgeInterface
     /**
      * @codeCoverageIgnore
      */
-    public static function getCacheKeyHeaderKey(): string
+    public function getCacheKeyHeaderKey(): string
     {
         return self::CACHE_KEY_HEADER_KEY;
     }

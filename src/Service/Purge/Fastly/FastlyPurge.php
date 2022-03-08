@@ -6,6 +6,7 @@ namespace Smartframe\Cdn\Service\Purge\Fastly;
 
 use Fastly\FastlyInterface;
 use Fig\Http\Message\StatusCodeInterface;
+use Smartframe\Cdn\Exception\PurgeByHostnameNotSupportedException;
 use Smartframe\Cdn\Exception\WildcardUrlNotSupportedException;
 use Smartframe\Cdn\Logger\ResponseLogger;
 use Smartframe\Cdn\Service\Purge\PurgeInterface;
@@ -49,6 +50,14 @@ class FastlyPurge implements PurgeInterface
         ]);
 
         return StatusCodeInterface::STATUS_OK === $response->getStatusCode();
+    }
+
+    /**
+     * @throws PurgeByHostnameNotSupportedException
+     */
+    public function hostname(string $cacheId, string $hostname): bool
+    {
+        throw new PurgeByHostnameNotSupportedException();
     }
 
     public function all(string $cacheId): bool

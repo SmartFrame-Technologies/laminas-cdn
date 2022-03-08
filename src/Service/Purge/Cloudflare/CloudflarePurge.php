@@ -38,6 +38,12 @@ class CloudflarePurge implements PurgeInterface
         return $this->zonesEndpoint->cachePurge($cacheId, [], [$keyId]);
     }
 
+    /** @throws EndpointException */
+    public function hostname(string $cacheId, string $hostname): bool
+    {
+        return $this->zonesEndpoint->cachePurge($cacheId, [], [], [$hostname]);
+    }
+
     public function all(string $cacheId): bool
     {
         return $this->zonesEndpoint->cachePurgeEverything($cacheId);

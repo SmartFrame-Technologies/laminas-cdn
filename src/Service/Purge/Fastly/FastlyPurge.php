@@ -76,12 +76,15 @@ class FastlyPurge implements PurgeInterface
     /**
      * @codeCoverageIgnore
      */
-    public function isWildcardUrlSupported(): bool
+    public static function isWildcardUrlSupported(): bool
     {
         return false;
     }
 
-    public function getCacheKeyHeaderKey(): string
+    /**
+     * @codeCoverageIgnore
+     */
+    public static function getCacheKeyHeaderKey(): string
     {
         return self::CACHE_KEY_HEADER_KEY;
     }

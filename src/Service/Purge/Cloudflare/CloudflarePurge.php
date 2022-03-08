@@ -11,6 +11,8 @@ use Smartframe\Cdn\Service\Purge\PurgeInterface;
 
 class CloudflarePurge implements PurgeInterface
 {
+    public const CACHE_KEY_HEADER_KEY = 'Cache-Tag';
+
     private Zones $zonesEndpoint;
 
     public function __construct(
@@ -55,5 +57,10 @@ class CloudflarePurge implements PurgeInterface
     public function isWildcardUrlSupported(): bool
     {
         return false;
+    }
+
+    public function getCacheKeyHeaderKey(): string
+    {
+        return self::CACHE_KEY_HEADER_KEY;
     }
 }

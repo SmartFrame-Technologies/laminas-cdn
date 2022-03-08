@@ -22,4 +22,6 @@ interface PurgeInterface
     public function all(string $cacheId): bool;
 
     public function isWildcardUrlSupported(): bool;
+
+    public function getCacheKeyHeaderKey(): string;
 }

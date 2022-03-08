@@ -13,6 +13,8 @@ use Smartframe\Cdn\Service\Purge\PurgeInterface;
 
 class FastlyPurge implements PurgeInterface
 {
+    public const CACHE_KEY_HEADER_KEY = 'Surrogate-Key';
+
     private FastlyInterface $fastlyClient;
     private ResponseLogger $responseLogger;
 
@@ -77,5 +79,10 @@ class FastlyPurge implements PurgeInterface
     public function isWildcardUrlSupported(): bool
     {
         return false;
+    }
+
+    public function getCacheKeyHeaderKey(): string
+    {
+        return self::CACHE_KEY_HEADER_KEY;
     }
 }

@@ -24,4 +24,6 @@ interface PurgeInterface
     public function isWildcardUrlSupported(): bool;
 
     public function getCacheKeyHeaderKey(): string;
+
+    public static function getCacheKeySeparator(): string;
 }

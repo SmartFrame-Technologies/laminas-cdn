@@ -12,6 +12,7 @@ use Smartframe\Cdn\Service\Purge\PurgeInterface;
 class CloudflarePurge implements PurgeInterface
 {
     public const CACHE_KEY_HEADER_KEY = 'Cache-Tag';
+    public const CACHE_KEY_SEPARATOR = ',';
 
     private Zones $zonesEndpoint;
 
@@ -65,5 +66,13 @@ class CloudflarePurge implements PurgeInterface
     public function getCacheKeyHeaderKey(): string
     {
         return self::CACHE_KEY_HEADER_KEY;
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    public static function getCacheKeySeparator(): string
+    {
+        return self::CACHE_KEY_SEPARATOR;
     }
 }

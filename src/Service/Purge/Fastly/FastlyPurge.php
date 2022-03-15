@@ -14,6 +14,7 @@ use Smartframe\Cdn\Service\Purge\PurgeInterface;
 class FastlyPurge implements PurgeInterface
 {
     public const CACHE_KEY_HEADER_KEY = 'Surrogate-Key';
+    public const CACHE_KEY_SEPARATOR = ' ';
 
     private FastlyInterface $fastlyClient;
     private ResponseLogger $responseLogger;
@@ -87,5 +88,13 @@ class FastlyPurge implements PurgeInterface
     public function getCacheKeyHeaderKey(): string
     {
         return self::CACHE_KEY_HEADER_KEY;
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    public static function getCacheKeySeparator(): string
+    {
+        return self::CACHE_KEY_SEPARATOR;
     }
 }

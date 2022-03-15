@@ -71,7 +71,7 @@ class CloudflarePurge implements PurgeInterface
     /**
      * @codeCoverageIgnore
      */
-    public static function getCacheKeySeparator(): string
+    public function getCacheKeySeparator(): string
     {
         return self::CACHE_KEY_SEPARATOR;
     }

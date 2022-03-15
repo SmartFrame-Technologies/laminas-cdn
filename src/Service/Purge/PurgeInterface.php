@@ -25,5 +25,5 @@ interface PurgeInterface
 
     public function getCacheKeyHeaderKey(): string;
 
-    public static function getCacheKeySeparator(): string;
+    public function getCacheKeySeparator(): string;
 }

@@ -6,12 +6,16 @@ namespace Smartframe\Cdn\Service\Purge\Fastly;
 
 use Fastly\FastlyInterface;
 use Fig\Http\Message\StatusCodeInterface;
+use Smartframe\Cdn\Exception\PurgeByHostnameNotSupportedException;
 use Smartframe\Cdn\Exception\WildcardUrlNotSupportedException;
 use Smartframe\Cdn\Logger\ResponseLogger;
 use Smartframe\Cdn\Service\Purge\PurgeInterface;
 
 class FastlyPurge implements PurgeInterface
 {
+    public const CACHE_KEY_HEADER_KEY = 'Surrogate-Key';
+    public const CACHE_KEY_SEPARATOR = ' ';
+
     private FastlyInterface $fastlyClient;
     private ResponseLogger $responseLogger;
 
@@ -51,6 +55,14 @@ class FastlyPurge implements PurgeInterface
         return StatusCodeInterface::STATUS_OK === $response->getStatusCode();
     }
 
+    /**
+     * @throws PurgeByHostnameNotSupportedException
+     */
+    public function hostname(string $cacheId, string $hostname): bool
+    {
+        throw new PurgeByHostnameNotSupportedException();
+    }
+
     public function all(string $cacheId): bool
     {
         $response = $this->fastlyClient->purgeAll($cacheId);
@@ -68,5 +80,21 @@ class FastlyPurge implements PurgeInterface
     public function isWildcardUrlSupported(): bool
     {
         return false;
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    public function getCacheKeyHeaderKey(): string
+    {
+        return self::CACHE_KEY_HEADER_KEY;
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    public function getCacheKeySeparator(): string
+    {
+        return self::CACHE_KEY_SEPARATOR;
     }
 }

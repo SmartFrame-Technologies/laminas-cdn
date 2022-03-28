@@ -10,7 +10,6 @@ use Generator;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use Psr\Log\LoggerInterface;
 use Smartframe\Cdn\Exception\WildcardUrlNotSupportedException;
 use Smartframe\Cdn\Logger\ResponseLogger;
 use Smartframe\Cdn\Service\Purge\Fastly\FastlyPurge;
@@ -30,9 +29,9 @@ class FastlyPurgeTest extends TestCase
         parent::setUp();
 
         $this->fastlyClient = $this->createMock(FastlyInterface::class);
-        $this->responseLogger = $this->createMock(ResponseLogger::class);
+        $responseLogger = $this->createMock(ResponseLogger::class);
 
-        $this->fastlyPurge = new FastlyPurge($this->fastlyClient, $this->responseLogger);
+        $this->fastlyPurge = new FastlyPurge($this->fastlyClient, $responseLogger);
     }
 
     public function testPurgeUrlWithWildcard(): void

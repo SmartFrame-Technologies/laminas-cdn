@@ -36,13 +36,20 @@
         "laminas/laminas-servicemanager": "^3.10.0",
         "psr/container": "^1.1.2",
         "psr/http-message": "^1.0.1",
-        "psr/log": "^1.1.4"
+        "psr/log": "^1.1.4",
+        "smartframe-technologies/cloudflare-php": "dev-feature/key-value-endpoint"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
         "roave/security-advisories": "dev-latest"
     },
-    "config" : {
+    "config": {
         "sort-packages": true
-    }
+    },
+   "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/SmartFrame-Technologies/cloudflare-php"
+        }
+   ]
 }

@@ -2,17 +2,19 @@
 
 declare(strict_types=1);
 
-namespace SmartframeTest\Cdn\Factory\Fastly;
+namespace SmartframeTest\Cdn\Factory\Cloudflare;
 
-use Fastly\Fastly;
+
+use Cloudflare\API\Endpoints\Zones;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Smartframe\Cdn\ConfigProvider;
+use Smartframe\Cdn\Exception\Cloudflare\CloudflareApiTokenNotDefinedException;
 use Smartframe\Cdn\Exception\Fastly\FastlyApiTokenNotDefinedException;
-use Smartframe\Cdn\Factory\Fastly\FastlyClientFactory;
+use Smartframe\Cdn\Factory\Cloudflare\CloudflareZonesFactory;
 
-class FastlyClientFactoryTest extends TestCase
+class CloudflareZonesFactoryTest extends TestCase
 {
     /**
      * @dataProvider configDataProvider
@@ -22,15 +24,15 @@ class FastlyClientFactoryTest extends TestCase
         $container = $this->getMockBuilder(ContainerInterface::class)->getMock();
         $container->method('get')->willReturn($config);
 
-        $factory = new FastlyClientFactory();
+        $factory = new CloudflareZonesFactory();
 
         if (isset($expectedExceptionClass)) {
             $this->expectException($expectedExceptionClass);
         }
 
-        $object = $factory($container, Fastly::class);
+        $object = $factory($container, Zones::class);
 
-        self::assertInstanceOf(Fastly::class, $object);
+        self::assertInstanceOf(Zones::class, $object);
     }
 
     public function configDataProvider(): Generator
@@ -38,7 +40,7 @@ class FastlyClientFactoryTest extends TestCase
         yield 'Correct configuration' => [
             'config' => [
                 'cdn' => [
-                    'fastly' => [
+                    'cloudflare' => [
                         'apiToken' => 'some-test-token'
                     ]
                 ]
@@ -49,22 +51,22 @@ class FastlyClientFactoryTest extends TestCase
         yield 'Fastly API token has a placeholder value' => [
             'config' => [
                 'cdn' => [
-                    'fastly' => [
+                    'cloudflare' => [
                         'apiToken' => ConfigProvider::API_TOKEN_PLACEHOLDER
                     ]
                 ]
             ],
-            'expectedExceptionClass' => FastlyApiTokenNotDefinedException::class
+            'expectedExceptionClass' => CloudflareApiTokenNotDefinedException::class
         ];
 
         yield 'Missing Fastly API token in configuration' => [
             'config' => [
                 'cdn' => [
-                    'fastly' => [
+                    'cloudflare' => [
                     ]
                 ]
             ],
-            'expectedExceptionClass' => FastlyApiTokenNotDefinedException::class
+            'expectedExceptionClass' => CloudflareApiTokenNotDefinedException::class
         ];
     }
 }

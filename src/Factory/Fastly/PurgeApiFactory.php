@@ -14,7 +14,7 @@ use Psr\Container\NotFoundExceptionInterface;
 use Smartframe\Cdn\ConfigProvider;
 use Smartframe\Cdn\Exception\Fastly\FastlyApiTokenNotDefinedException;
 
-class FastlyClientFactory implements FactoryInterface
+class PurgeApiFactory implements FactoryInterface
 {
     /**
      * @throws FastlyApiTokenNotDefinedException

@@ -7,7 +7,7 @@ namespace Smartframe\Cdn;
 use Cloudflare\API\Endpoints\Zones;
 use Fastly\Api\PurgeApi;
 use Smartframe\Cdn\Factory\Cloudflare\CloudflareZonesFactory;
-use Smartframe\Cdn\Factory\Fastly\FastlyClientFactory;
+use Smartframe\Cdn\Factory\Fastly\PurgeApiFactory;
 use Smartframe\Cdn\Logger\ResponseLogger;
 use Smartframe\Cdn\Logger\ResponseLoggerFactory;
 use Smartframe\Cdn\Service\Purge\Cloudflare\CloudflarePurge;
@@ -33,7 +33,7 @@ class ConfigProvider
             'factories' => [
                 // fastly
                 FastlyPurge::class => FastlyPurgeFactory::class,
-                PurgeApi::class => FastlyClientFactory::class,
+                PurgeApi::class => PurgeApiFactory::class,
                 // cloudflare
                 CloudflarePurge::class => CloudflarePurgeFactory::class,
                 Zones::class => CloudflareZonesFactory::class,

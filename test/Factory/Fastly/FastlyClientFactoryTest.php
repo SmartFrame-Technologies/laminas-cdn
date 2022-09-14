@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace SmartframeTest\Cdn\Factory\Fastly;
 
-use Fastly\Fastly;
+use Fastly\Api\PurgeApi;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Smartframe\Cdn\ConfigProvider;
 use Smartframe\Cdn\Exception\Fastly\FastlyApiTokenNotDefinedException;
-use Smartframe\Cdn\Factory\Fastly\FastlyClientFactory;
+use Smartframe\Cdn\Factory\Fastly\PurgeApiFactory;
 
 class FastlyClientFactoryTest extends TestCase
 {
@@ -22,15 +22,15 @@ class FastlyClientFactoryTest extends TestCase
         $container = $this->getMockBuilder(ContainerInterface::class)->getMock();
         $container->method('get')->willReturn($config);
 
-        $factory = new FastlyClientFactory();
+        $factory = new PurgeApiFactory();
 
         if (isset($expectedExceptionClass)) {
             $this->expectException($expectedExceptionClass);
         }
 
-        $object = $factory($container, Fastly::class);
+        $object = $factory($container, PurgeApi::class);
 
-        self::assertInstanceOf(Fastly::class, $object);
+        self::assertInstanceOf(PurgeApi::class, $object);
     }
 
     public function configDataProvider(): Generator

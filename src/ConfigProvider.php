@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Smartframe\Cdn;
 
 use Cloudflare\API\Endpoints\Zones;
+use Fastly\Api\PurgeApi;
 use Smartframe\Cdn\Factory\Cloudflare\CloudflareZonesFactory;
-use Smartframe\Cdn\Factory\Fastly\FastlyClientFactory;
-use Fastly\Fastly;
-use Fastly\FastlyInterface;
+use Smartframe\Cdn\Factory\Fastly\PurgeApiFactory;
 use Smartframe\Cdn\Logger\ResponseLogger;
 use Smartframe\Cdn\Logger\ResponseLoggerFactory;
 use Smartframe\Cdn\Service\Purge\Cloudflare\CloudflarePurge;
@@ -31,13 +30,10 @@ class ConfigProvider
     public function getDependencyConfig(): array
     {
         return [
-            'aliases' => [
-                FastlyInterface::class => Fastly::class,
-            ],
             'factories' => [
                 // fastly
                 FastlyPurge::class => FastlyPurgeFactory::class,
-                Fastly::class => FastlyClientFactory::class,
+                PurgeApi::class => PurgeApiFactory::class,
                 // cloudflare
                 CloudflarePurge::class => CloudflarePurgeFactory::class,
                 Zones::class => CloudflareZonesFactory::class,

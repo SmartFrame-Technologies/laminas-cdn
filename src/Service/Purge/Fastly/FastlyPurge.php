@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Smartframe\Cdn\Service\Purge\Fastly;
 
-use Fastly\FastlyInterface;
+use Fastly\Api\PurgeApi;
 use Fig\Http\Message\StatusCodeInterface;
 use Smartframe\Cdn\Exception\PurgeByHostnameNotSupportedException;
 use Smartframe\Cdn\Exception\WildcardUrlNotSupportedException;
@@ -16,11 +16,11 @@ class FastlyPurge implements PurgeInterface
     public const CACHE_KEY_HEADER_KEY = 'Surrogate-Key';
     public const CACHE_KEY_SEPARATOR = ' ';
 
-    private FastlyInterface $fastlyClient;
+    private PurgeApi $fastlyClient;
     private ResponseLogger $responseLogger;
 
     public function __construct(
-        FastlyInterface $fastlyClient,
+        PurgeApi $fastlyClient,
         ResponseLogger $responseLogger
     ) {
         $this->fastlyClient = $fastlyClient;
@@ -33,7 +33,7 @@ class FastlyPurge implements PurgeInterface
             throw new WildcardUrlNotSupportedException();
         }
 
-        $response = $this->fastlyClient->purge($url);
+        $response = $this->fastlyClient->purgeSingleUrl(['service_id' => $cacheId, 'host' => $url]);
 
         ($this->responseLogger)($response, [
             'cacheId' => $cacheId,
@@ -45,7 +45,7 @@ class FastlyPurge implements PurgeInterface
 
     public function key(string $cacheId, string $keyId): bool
     {
-        $response = $this->fastlyClient->purgeKey($cacheId, $keyId);
+        $response = $this->fastlyClient->purgeTag(['service_id' => $cacheId, 'surrogate_key' => $keyId]);
 
         ($this->responseLogger)($response, [
             'cacheId' => $cacheId,
@@ -65,7 +65,7 @@ class FastlyPurge implements PurgeInterface
 
     public function all(string $cacheId): bool
     {
-        $response = $this->fastlyClient->purgeAll($cacheId);
+        $response = $this->fastlyClient->purgeAll(['service_id' => $cacheId]);
 
         ($this->responseLogger)($response, [
             'cacheId' => $cacheId,

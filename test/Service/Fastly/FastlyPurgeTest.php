@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SmartframeTest\Cdn\Service\Fastly;
 
-use Fastly\FastlyInterface;
+use Fastly\Api\PurgeApi;
 use Fig\Http\Message\StatusCodeInterface;
 use Generator;
 use PHPUnit\Framework\TestCase;
@@ -21,14 +21,14 @@ class FastlyPurgeTest extends TestCase
     private const TEST_URL_WITH_WILDCARD = 'https://some-address.com/something/*';
     private const TEST_SURROGATE_KEY = 'some-surrogate-key';
 
-    private FastlyInterface $fastlyClient;
+    private PurgeApi $fastlyClient;
     private FastlyPurge $fastlyPurge;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->fastlyClient = $this->createMock(FastlyInterface::class);
+        $this->fastlyClient = $this->createMock(PurgeApi::class);
         $responseLogger = $this->createMock(ResponseLogger::class);
 
         $this->fastlyPurge = new FastlyPurge($this->fastlyClient, $responseLogger);
@@ -48,7 +48,7 @@ class FastlyPurgeTest extends TestCase
     {
         $response = $this->prepareMockedResponse($responseStatusCode);
 
-        $this->fastlyClient->method('purge')->willReturn($response);
+        $this->fastlyClient->method('purgeSingleUrl')->willReturn($response);
 
         $actualResult = $this->fastlyPurge->url(self::FASTLY_SERVICE_ID, self::TEST_URL);
 
@@ -62,7 +62,7 @@ class FastlyPurgeTest extends TestCase
     {
         $response = $this->prepareMockedResponse($responseStatusCode);
 
-        $this->fastlyClient->method('purgeKey')->willReturn($response);
+        $this->fastlyClient->method('purgeTag')->willReturn($response);
 
         $actualResult = $this->fastlyPurge->key(self::FASTLY_SERVICE_ID, self::TEST_SURROGATE_KEY);
 

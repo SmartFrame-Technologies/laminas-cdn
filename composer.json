@@ -30,8 +30,8 @@
         }
     ],
     "require": {
-        "php": "^7.4",
-        "fastly/fastly": "^0.4.1",
+        "php": "^7.4 | ^8.0 | ^8.1",
+        "fastly/fastly": "^1.0.0-beta2",
         "fig/http-message-util": "^1.1.5",
         "laminas/laminas-servicemanager": "^3.10.0",
         "psr/container": "^1.1.2",

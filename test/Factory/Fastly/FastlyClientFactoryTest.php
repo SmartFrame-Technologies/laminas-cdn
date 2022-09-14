@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SmartframeTest\Cdn\Factory\Fastly;
 
-use Fastly\Fastly;
+use Fastly\Api\PurgeApi;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
@@ -28,9 +28,9 @@ class FastlyClientFactoryTest extends TestCase
             $this->expectException($expectedExceptionClass);
         }
 
-        $object = $factory($container, Fastly::class);
+        $object = $factory($container, PurgeApi::class);
 
-        self::assertInstanceOf(Fastly::class, $object);
+        self::assertInstanceOf(PurgeApi::class, $object);
     }
 
     public function configDataProvider(): Generator

@@ -4,16 +4,25 @@ declare(strict_types=1);
 
 namespace Smartframe\Cdn;
 
-use Cloudflare\API\Endpoints\Zones;
-use Fastly\Api\PurgeApi;
+use Smartframe\Cdn\Service\Dictionary\Cloudflare\CloudflareAdapter;
+use Smartframe\Cdn\Service\Dictionary\Cloudflare\CloudflareAdapterFactory;
+use Smartframe\Cdn\Service\Dictionary\Cloudflare\CloudflareDictionary as CloudflareDictionary;
+use Smartframe\Cdn\Service\Dictionary\Cloudflare\CloudflareDictionaryFactory as CloudflareDictionaryFactory;
+use Smartframe\Cdn\Service\Dictionary\Fastly\FastlyDictionary;
+use Smartframe\Cdn\Service\Dictionary\Fastly\FastlyDictionaryAdapter;
+use Smartframe\Cdn\Service\Dictionary\Fastly\FastlyDictionaryAdapterFactory;
+use Smartframe\Cdn\Service\Dictionary\Fastly\FastlyDictionaryFactory;
 use Smartframe\Cdn\Factory\Cloudflare\CloudflareZonesFactory;
-use Smartframe\Cdn\Factory\Fastly\PurgeApiFactory;
+use Smartframe\Cdn\Factory\Fastly\FastlyApiFactory;
 use Smartframe\Cdn\Logger\ResponseLogger;
 use Smartframe\Cdn\Logger\ResponseLoggerFactory;
 use Smartframe\Cdn\Service\Purge\Cloudflare\CloudflarePurge;
 use Smartframe\Cdn\Service\Purge\Cloudflare\CloudflarePurgeFactory;
 use Smartframe\Cdn\Service\Purge\Fastly\FastlyPurge;
 use Smartframe\Cdn\Service\Purge\Fastly\FastlyPurgeFactory;
+use Cloudflare\API\Endpoints\Zones;
+use Fastly\Api\DictionaryItemApi;
+use Fastly\Api\PurgeApi;
 
 class ConfigProvider
 {
@@ -33,9 +42,14 @@ class ConfigProvider
             'factories' => [
                 // fastly
                 FastlyPurge::class => FastlyPurgeFactory::class,
-                PurgeApi::class => PurgeApiFactory::class,
+                FastlyDictionary::class => FastlyDictionaryFactory::class,
+                FastlyDictionaryAdapter::class => FastlyDictionaryAdapterFactory::class,
+                PurgeApi::class => FastlyApiFactory::class,
+                DictionaryItemApi::class => FastlyApiFactory::class,
                 // cloudflare
                 CloudflarePurge::class => CloudflarePurgeFactory::class,
+                CloudflareDictionary::class => CloudflareDictionaryFactory::class,
+                CloudflareAdapter::class => CloudflareAdapterFactory::class,
                 Zones::class => CloudflareZonesFactory::class,
                 // utilities
                 ResponseLogger::class => ResponseLoggerFactory::class,

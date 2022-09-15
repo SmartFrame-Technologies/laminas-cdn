@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Smartframe\Cdn\ConfigProvider;
 use Smartframe\Cdn\Exception\Fastly\FastlyApiTokenNotDefinedException;
-use Smartframe\Cdn\Factory\Fastly\PurgeApiFactory;
+use Smartframe\Cdn\Factory\Fastly\FastlyApiFactory;
 
 class FastlyClientFactoryTest extends TestCase
 {
@@ -22,7 +22,7 @@ class FastlyClientFactoryTest extends TestCase
         $container = $this->getMockBuilder(ContainerInterface::class)->getMock();
         $container->method('get')->willReturn($config);
 
-        $factory = new PurgeApiFactory();
+        $factory = new FastlyApiFactory();
 
         if (isset($expectedExceptionClass)) {
             $this->expectException($expectedExceptionClass);

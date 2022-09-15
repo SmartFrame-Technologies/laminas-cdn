@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SmartframeTest\Cdn\Service\Cloudflare;
+namespace SmartframeTest\Cdn\Service\Purge\Cloudflare;
 
 use Cloudflare\API\Endpoints\Zones;
 use PHPUnit\Framework\TestCase;

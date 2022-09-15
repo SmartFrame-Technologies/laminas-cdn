@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SmartframeTest\Cdn\Service\Fastly;
+namespace SmartframeTest\Cdn\Service\Purge\Fastly;
 
 use Fastly\Api\PurgeApi;
 use Fig\Http\Message\StatusCodeInterface;

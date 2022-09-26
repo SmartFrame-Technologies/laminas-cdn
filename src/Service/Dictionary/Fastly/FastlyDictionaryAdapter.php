@@ -42,8 +42,7 @@ class FastlyDictionaryAdapter implements AdapterInterface
             );
         }
 
-        $content = $response->getBody()->getContents();
-        foreach ($response as $key => $itemResponse) {
+        foreach ($response as $itemResponse) {
             $data['item_value'] = FastlyItemValue::createByValue($itemResponse->getItemValue());
             yield $itemResponse->getItemKey() => $data;
         }

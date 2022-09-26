@@ -100,6 +100,9 @@ class FastlyDictionaryAdapter implements AdapterInterface
 
         try {
             foreach($items as $key => $value) {
+                if (!($value instanceof ItemValue)) {
+                    $value = new ItemValue($value);
+                }
                 $this->setKeyValue($serviceId, $dictionaryId, $key, $value);
             }
         } catch (BadRequestException $exception) {

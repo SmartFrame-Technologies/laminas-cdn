@@ -5,6 +5,7 @@ namespace Smartframe\Cdn\Service\Dictionary\Fastly;
 use Smartframe\Cdn\Service\Dictionary\AdapterInterface;
 use Smartframe\Cdn\Service\Dictionary\Exception\BadRequestException;
 use Smartframe\Cdn\Service\Dictionary\Exception\BadResponseException;
+use Smartframe\Cdn\Service\Dictionary\Item;
 use Smartframe\Cdn\Service\Dictionary\ItemValue;
 use Smartframe\Cdn\Service\Dictionary\stdClass;
 use Fastly\Api\DictionaryItemApi;
@@ -43,7 +44,10 @@ class FastlyDictionaryAdapter implements AdapterInterface
         }
 
         foreach ($response as $itemResponse) {
-            $data['item_value'] = FastlyItemValue::createByValue($itemResponse->getItemValue());
+            $data = [
+                Item::KEY_PARAM => $itemResponse->getItemKey(),
+                Item::VALUE_PARAM => FastlyItemValue::createByValue($itemResponse->getItemValue()),
+            ];
             yield $itemResponse->getItemKey() => $data;
         }
     }
@@ -100,6 +104,9 @@ class FastlyDictionaryAdapter implements AdapterInterface
 
         try {
             foreach($items as $key => $value) {
+                if (!($value instanceof ItemValue)) {
+                    $value = new ItemValue($value);
+                }
                 $this->setKeyValue($serviceId, $dictionaryId, $key, $value);
             }
         } catch (BadRequestException $exception) {

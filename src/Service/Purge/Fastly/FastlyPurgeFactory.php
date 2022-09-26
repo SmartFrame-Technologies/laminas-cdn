@@ -21,7 +21,8 @@ class FastlyPurgeFactory implements FactoryInterface
     {
         return new FastlyPurge(
             $container->get(PurgeApi::class),
-            $container->get(ResponseLogger::class)
+            $container->get(ResponseLogger::class),
+            $container->get('config')['cdn']['fastly']['fastlySoftPurge'] ?? false,
         );
     }
 }

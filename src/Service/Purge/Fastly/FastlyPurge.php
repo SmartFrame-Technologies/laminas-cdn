@@ -18,13 +18,16 @@ class FastlyPurge implements PurgeInterface
 
     private PurgeApi $fastlyClient;
     private ResponseLogger $responseLogger;
+    private bool $fastlySoftPurge;
 
     public function __construct(
         PurgeApi $fastlyClient,
-        ResponseLogger $responseLogger
+        ResponseLogger $responseLogger,
+        bool $fastlySoftPurge = false
     ) {
         $this->fastlyClient = $fastlyClient;
         $this->responseLogger = $responseLogger;
+        $this->fastlySoftPurge = $fastlySoftPurge;
     }
 
     public function url(string $cacheId, string $url): bool
@@ -33,7 +36,7 @@ class FastlyPurge implements PurgeInterface
             throw new WildcardUrlNotSupportedException();
         }
 
-        $response = $this->fastlyClient->purgeSingleUrl(['service_id' => $cacheId, 'host' => $url]);
+        $response = $this->fastlyClient->purgeSingleUrl(['service_id' => $cacheId, 'host' => $url, 'fastly_soft_purge' => $this->fastlySoftPurge ? 1 : 0]);
 
         ($this->responseLogger)($response, [
             'cacheId' => $cacheId,
@@ -45,7 +48,7 @@ class FastlyPurge implements PurgeInterface
 
     public function key(string $cacheId, string $keyId): bool
     {
-        $response = $this->fastlyClient->purgeTag(['service_id' => $cacheId, 'surrogate_key' => $keyId]);
+        $response = $this->fastlyClient->purgeTag(['service_id' => $cacheId, 'surrogate_key' => $keyId, 'fastly_soft_purge' => $this->fastlySoftPurge ? 1 : 0]);
 
         ($this->responseLogger)($response, [
             'cacheId' => $cacheId,
@@ -65,7 +68,7 @@ class FastlyPurge implements PurgeInterface
 
     public function all(string $cacheId): bool
     {
-        $response = $this->fastlyClient->purgeAll(['service_id' => $cacheId]);
+        $response = $this->fastlyClient->purgeAll(['service_id' => $cacheId, 'fastly_soft_purge' => $this->fastlySoftPurge ? 1 : 0]);
 
         ($this->responseLogger)($response, [
             'cacheId' => $cacheId,

@@ -23,6 +23,22 @@ class FastlyApiFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $config = $container->get('config')['cdn']['fastly'] ?? [];
+        $clientConfig = $config['client'] ?? [];
+        unset($config['client']);
+
+        return new $requestedName(
+            $this->createClient($clientConfig),
+            $this->createConfiguration($config)
+        );
+    }
+
+    protected function createClient(array $config = []): Client
+    {
+        return new Client($config);
+    }
+
+    protected function createConfiguration(array $config = []): Configuration
+    {
         if (!isset($config['apiToken']) || $config['apiToken'] === ConfigProvider::API_TOKEN_PLACEHOLDER) {
             throw new FastlyApiTokenNotDefinedException();
         }
@@ -34,9 +50,6 @@ class FastlyApiFactory implements FactoryInterface
             $fastlyConfig->setHost($config['baseURI']);
         }
 
-        return new $requestedName(
-            new Client(),
-            $fastlyConfig
-        );
+        return $fastlyConfig;
     }
 }

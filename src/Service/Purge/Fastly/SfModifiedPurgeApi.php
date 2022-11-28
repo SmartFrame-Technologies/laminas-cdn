@@ -3,7 +3,6 @@
 namespace Smartframe\Cdn\Service\Purge\Fastly;
 
 use GuzzleHttp\Psr7\Request;
-use Smartframe\Cdn\Exception\GivenUrlNotSupportedException;
 
 class SfModifiedPurgeApi extends \Fastly\Api\PurgeApi
 {
@@ -25,13 +24,12 @@ class SfModifiedPurgeApi extends \Fastly\Api\PurgeApi
     protected function modifyFastlyPurgeRequest(Request $request): Request
     {
         $headers = $request->getHeaders();
-        $url = $headers['host'];
+        $url = reset($headers['host']);
         if(!preg_match('/^(https?:\/\/)?(.*?)\/(.*)$/i', $url, $matches)) {
             return $request;
         }
 
         $host = $matches[2];
-        $cachedUrl = $matches[2] . '/' . $matches[3];
         $headers['host'] = $host;
 
         return new Request(

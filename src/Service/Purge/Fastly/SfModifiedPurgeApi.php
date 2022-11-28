@@ -31,6 +31,7 @@ class SfModifiedPurgeApi extends \Fastly\Api\PurgeApi
 
         $host = $matches[2];
         $headers['host'] = $host;
+        unset($headers['Accept'], $headers['Content-Type']);
 
         return new Request(
             self::PURGE_CACHE_METHOD,

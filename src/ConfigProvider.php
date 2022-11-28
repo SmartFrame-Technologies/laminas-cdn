@@ -23,6 +23,7 @@ use Smartframe\Cdn\Service\Purge\Fastly\FastlyPurgeFactory;
 use Cloudflare\API\Endpoints\Zones;
 use Fastly\Api\DictionaryItemApi;
 use Fastly\Api\PurgeApi;
+use Smartframe\Cdn\Service\Purge\Fastly\SfModifiedPurgeApi;
 
 class ConfigProvider
 {
@@ -44,6 +45,7 @@ class ConfigProvider
                 FastlyPurge::class => FastlyPurgeFactory::class,
                 FastlyDictionary::class => FastlyDictionaryFactory::class,
                 FastlyDictionaryAdapter::class => FastlyDictionaryAdapterFactory::class,
+                SfModifiedPurgeApi::class => FastlyApiFactory::class,
                 PurgeApi::class => FastlyApiFactory::class,
                 DictionaryItemApi::class => FastlyApiFactory::class,
                 // cloudflare

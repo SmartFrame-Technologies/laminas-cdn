@@ -43,7 +43,7 @@ class FastlyPurge implements PurgeInterface
             'url' => $url,
         ]);
 
-        return StatusCodeInterface::STATUS_OK === $response->getStatusCode();
+        return StatusCodeInterface::STATUS_OK === $response->getStatus();
     }
 
     public function key(string $cacheId, string $keyId): bool
@@ -55,7 +55,7 @@ class FastlyPurge implements PurgeInterface
             'keyId' => $keyId,
         ]);
 
-        return StatusCodeInterface::STATUS_OK === $response->getStatusCode();
+        return StatusCodeInterface::STATUS_OK === $response->getStatus();
     }
 
     /**
@@ -74,7 +74,7 @@ class FastlyPurge implements PurgeInterface
             'cacheId' => $cacheId,
         ]);
 
-        return StatusCodeInterface::STATUS_OK === $response->getStatusCode();
+        return StatusCodeInterface::STATUS_OK === $response->getStatus();
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace SmartframeTest\Cdn\Logger;
 
+use Fastly\Model\PurgeResponse;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
@@ -17,7 +18,7 @@ class ResponseLoggerTest extends TestCase
         $responseLogger = new ResponseLogger();
         $responseLogger->setLogger($logger);
 
-        $response = $this->createMock(ResponseInterface::class);
+        $response = $this->createMock(PurgeResponse::class);
 
         $responseLogger($response, []);
     }

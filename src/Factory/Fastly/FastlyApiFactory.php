@@ -44,7 +44,7 @@ class FastlyApiFactory implements FactoryInterface
         }
 
         $fastlyConfig = new Configuration();
-        $fastlyConfig->setAccessToken($config['apiToken']);
+        $fastlyConfig->setApiToken($config['apiToken']);
 
         if(isset($config['baseURI'])){
             $fastlyConfig->setHost($config['baseURI']);

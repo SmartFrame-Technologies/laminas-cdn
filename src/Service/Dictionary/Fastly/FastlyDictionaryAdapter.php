@@ -37,8 +37,7 @@ class FastlyDictionaryAdapter implements AdapterInterface
                     $dictionaryId,
                     $exception->getMessage()
                 ),
-                $exception->getRequest(),
-                $exception->getResponse(),
+                $exception->getCode(),
                 $exception
             );
         }
@@ -65,8 +64,7 @@ class FastlyDictionaryAdapter implements AdapterInterface
                     $key,
                     $exception->getMessage()
                 ),
-                $exception->getRequest(),
-                $exception->getResponse(),
+                $exception->getCode(),
                 $exception
             );
         }
@@ -89,8 +87,7 @@ class FastlyDictionaryAdapter implements AdapterInterface
         } catch(ApiException $exception) {
             throw new BadRequestException(
                 sprintf("Upsert item cannot be done because of error: %s", $exception->getMessage()),
-                $exception->getRequest(),
-                $exception->getResponse(),
+                $exception->getCode(),
                 $exception
             );
         }
@@ -123,8 +120,7 @@ class FastlyDictionaryAdapter implements AdapterInterface
         } catch(ApiException $exception) {
             throw new BadRequestException(
                 sprintf("Delete item cannot be done because of error: %s", $exception->getMessage()),
-                $exception->getRequest(),
-                $exception->getResponse(),
+                $exception->getCode(),
                 $exception
             );
         }

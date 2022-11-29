@@ -18,7 +18,6 @@ class SfModifiedPurgeApi extends \Fastly\Api\PurgeApi
         } else {
             return $request;
         }
-
     }
 
     protected function modifyFastlyPurgeRequest(Request $request): Request

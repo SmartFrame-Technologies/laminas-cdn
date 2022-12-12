@@ -36,11 +36,11 @@ class FastlyPurge implements PurgeInterface
             throw new WildcardUrlNotSupportedException();
         }
 
-        $response = $this->fastlyClient->purgeSingleUrl(['service_id' => $cacheId, 'host' => $url, 'fastly_soft_purge' => $this->fastlySoftPurge ? 1 : 0]);
+        $response = $this->fastlyClient->purgeSingleUrl(['service_id' => $cacheId, 'cached_url' => $url, 'fastly_soft_purge' => $this->fastlySoftPurge ? 1 : 0]);
 
         ($this->responseLogger)($response, [
             'cacheId' => $cacheId,
-            'url' => $url,
+            'cached_url' => $url,
         ]);
 
         return StatusCodeInterface::STATUS_OK === $response->getStatusCode();

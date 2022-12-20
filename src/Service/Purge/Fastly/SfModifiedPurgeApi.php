@@ -13,7 +13,7 @@ class SfModifiedPurgeApi extends \Fastly\Api\PurgeApi
         /** @var Request $request */
         $request = parent::purgeSingleUrlRequest($options);
 
-        if ($request->getMethod() === 'GET') {
+        if ($request->getMethod() !== self::PURGE_CACHE_METHOD) {
             return $this->modifyFastlyPurgeRequest($request);
         } else {
             return $request;

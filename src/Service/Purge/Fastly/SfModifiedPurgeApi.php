@@ -23,7 +23,7 @@ class SfModifiedPurgeApi extends \Fastly\Api\PurgeApi
     protected function modifyFastlyPurgeRequest(Request $request): Request
     {
         $headers = $request->getHeaders();
-        $url = reset($headers['host']);
+        $url = isset($headers['host']) ? reset($headers['host']) : $request->getUri();
         if(!preg_match('/^(https?:\/\/)?(.*?)\/(.*)$/i', $url, $matches)) {
             return $request;
         }

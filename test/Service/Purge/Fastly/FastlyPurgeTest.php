@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SmartframeTest\Cdn\Service\Purge\Fastly;
 
 use Fastly\Api\PurgeApi;
+use Fastly\Model\PurgeResponse;
 use Fig\Http\Message\StatusCodeInterface;
 use Generator;
 use PHPUnit\Framework\TestCase;
@@ -96,11 +97,10 @@ class FastlyPurgeTest extends TestCase
         ];
     }
 
-    private function prepareMockedResponse(int $responseStatusCode): ResponseInterface
+    private function prepareMockedResponse(int $responseStatusCode): PurgeResponse
     {
-        $response = $this->createMock(ResponseInterface::class);
-        $response->method('getBody')->willReturn($this->createMock(StreamInterface::class));
-        $response->method('getStatusCode')->willReturn($responseStatusCode);
+        $response = $this->createMock(PurgeResponse::class);
+        $response->method('getStatus')->willReturn($responseStatusCode);
         return $response;
     }
 }

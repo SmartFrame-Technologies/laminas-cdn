@@ -37,15 +37,15 @@ class FastlyDictionaryAdapter implements AdapterInterface
             $response = [];
             if ($limit === null) {
                 $options['per_page'] = self::DEFAULT_PER_PAGE;
-                $options['page'] = 0;
+                $options['page'] = 1;
                 do {
                     $paginationResponse = $this->fastlyClient->listDictionaryItems($options);
-                    $response += $paginationResponse;
+                    $response = array_merge($response, $paginationResponse);
                     $options['page'] += 1;
                 } while(count($paginationResponse) === self::DEFAULT_PER_PAGE);
             } else {
                 $options['per_page'] = $limit;
-                $options['page'] = (int)$cursor;
+                $options['page'] = $cursor ? (int)$cursor : 1;
                 $response = $this->fastlyClient->listDictionaryItems($options);
             }
         } catch (ApiException $exception) {

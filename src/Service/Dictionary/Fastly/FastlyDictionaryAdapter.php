@@ -16,6 +16,7 @@ class FastlyDictionaryAdapter implements AdapterInterface
     public const CREATE_OPERATION = 'create';
     public const UPDATE_OPERATION = 'update';
     public const DELETE_OPERATION = 'delete';
+    public const DEFAULT_PER_PAGE = 20;
 
     private DictionaryItemApi $fastlyClient;
 
@@ -27,8 +28,26 @@ class FastlyDictionaryAdapter implements AdapterInterface
 
     public function listKeys(string $cacheId, string $dictionaryId, int $limit = null, string $cursor = null, string $prefix = null): \Generator
     {
+        $options = [
+            'service_id' => $cacheId,
+            'dictionary_id' => $dictionaryId
+        ];
+
         try {
-            $response = $this->fastlyClient->listDictionaryItems(['service_id' => $cacheId, 'dictionary_id' => $dictionaryId]);
+            $response = [];
+            if ($limit === null) {
+                $options['per_page'] = self::DEFAULT_PER_PAGE;
+                $options['page'] = 1;
+                do {
+                    $paginationResponse = $this->fastlyClient->listDictionaryItems($options);
+                    $response = array_merge($response, $paginationResponse);
+                    $options['page'] += 1;
+                } while(count($paginationResponse) === self::DEFAULT_PER_PAGE);
+            } else {
+                $options['per_page'] = $limit;
+                $options['page'] = $cursor ? (int)$cursor : 1;
+                $response = $this->fastlyClient->listDictionaryItems($options);
+            }
         } catch (ApiException $exception) {
             throw new BadResponseException(
                 sprintf(

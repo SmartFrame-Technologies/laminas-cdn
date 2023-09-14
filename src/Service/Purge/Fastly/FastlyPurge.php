@@ -6,6 +6,7 @@ namespace Smartframe\Cdn\Service\Purge\Fastly;
 
 use Fastly\Api\PurgeApi;
 use Fig\Http\Message\StatusCodeInterface;
+use Smartframe\Cdn\Exception\Fastly\FastlyPurgeMultipleNotSupportedException;
 use Smartframe\Cdn\Exception\PurgeByHostnameNotSupportedException;
 use Smartframe\Cdn\Exception\WildcardUrlNotSupportedException;
 use Smartframe\Cdn\Logger\ResponseLogger;
@@ -30,29 +31,37 @@ class FastlyPurge implements PurgeInterface
         $this->fastlySoftPurge = $fastlySoftPurge;
     }
 
-    public function url(string $cacheId, string $url): bool
+    public function url(string $cacheId, string|array $urls): bool
     {
-        if (false !== \strpos($url, '*')) {
+        if (is_array($urls)) {
+            throw new FastlyPurgeMultipleNotSupportedException();
+        }
+
+        if (false !== \strpos($urls, '*')) {
             throw new WildcardUrlNotSupportedException();
         }
 
-        $response = $this->fastlyClient->purgeSingleUrl(['service_id' => $cacheId, 'cached_url' => $url, 'fastly_soft_purge' => $this->fastlySoftPurge ? 1 : 0]);
+        $response = $this->fastlyClient->purgeSingleUrl(['service_id' => $cacheId, 'cached_url' => $urls, 'fastly_soft_purge' => $this->fastlySoftPurge ? 1 : 0]);
 
         ($this->responseLogger)($response, [
             'cacheId' => $cacheId,
-            'cached_url' => $url,
+            'cached_url' => $urls,
         ]);
 
         return StatusCodeInterface::STATUS_OK === $response->getStatus();
     }
 
-    public function key(string $cacheId, string $keyId): bool
+    public function key(string $cacheId, string|array $keysId): bool
     {
-        $response = $this->fastlyClient->purgeTag(['service_id' => $cacheId, 'surrogate_key' => $keyId, 'fastly_soft_purge' => $this->fastlySoftPurge ? 1 : 0]);
+        if (is_array($keysId)) {
+            throw new FastlyPurgeMultipleNotSupportedException();
+        }
+
+        $response = $this->fastlyClient->purgeTag(['service_id' => $cacheId, 'surrogate_key' => $keysId, 'fastly_soft_purge' => $this->fastlySoftPurge ? 1 : 0]);
 
         ($this->responseLogger)($response, [
             'cacheId' => $cacheId,
-            'keyId' => $keyId,
+            'keyId' => $keysId,
         ]);
 
         return StatusCodeInterface::STATUS_OK === $response->getStatus();
@@ -61,7 +70,7 @@ class FastlyPurge implements PurgeInterface
     /**
      * @throws PurgeByHostnameNotSupportedException
      */
-    public function hostname(string $cacheId, string $hostname): bool
+    public function hostname(string $cacheId, string|array $hostnames): bool
     {
         throw new PurgeByHostnameNotSupportedException();
     }

@@ -26,25 +26,38 @@ class CloudflarePurge implements PurgeInterface
      * @throws EndpointException
      * @throws WildcardUrlNotSupportedException
      */
-    public function url(string $cacheId, string $url): bool
+    public function url(string $cacheId, string|array $urls): bool
     {
-        if (false !== \strpos($url, '*')) {
-            throw new WildcardUrlNotSupportedException();
+        if(is_string($urls)) {
+            $urls = [$urls];
         }
 
-        return $this->zonesEndpoint->cachePurge($cacheId, [$url]);
+        foreach($urls as $url) {
+            if (false !== \strpos($url, '*')) {
+                throw new WildcardUrlNotSupportedException();
+            }
+        }
+
+        return $this->zonesEndpoint->cachePurge($cacheId, $urls);
     }
 
     /** @throws EndpointException */
-    public function key(string $cacheId, string $keyId): bool
+    public function key(string $cacheId, string|array $keysId): bool
     {
-        return $this->zonesEndpoint->cachePurge($cacheId, [], [$keyId]);
+        if(is_string($keysId)) {
+            $keysId = [$keysId];
+        }
+        return $this->zonesEndpoint->cachePurge($cacheId, [], $keysId);
     }
 
     /** @throws EndpointException */
-    public function hostname(string $cacheId, string $hostname): bool
+    public function hostname(string $cacheId, string|array $hostnames): bool
     {
-        return $this->zonesEndpoint->cachePurge($cacheId, [], [], [$hostname]);
+        if(is_string($hostnames)) {
+            $hostnames = [$hostnames];
+        }
+
+        return $this->zonesEndpoint->cachePurge($cacheId, [], [], $hostnames);
     }
 
     public function all(string $cacheId): bool
